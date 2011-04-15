@@ -17,12 +17,13 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Pod-Weaver-Plugin-SubSpec',
-  'dist_version' => '0.02',
+  'dist_version' => '0.03',
   'license' => 'perl',
   'module_name' => 'Pod::Weaver::Plugin::SubSpec',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {
+    'Log::Any' => '0',
     'Pod::Weaver' => '0',
     'Sub::Spec::Pod' => '0',
     'perl' => '5.010000'

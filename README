@@ -2,7 +2,7 @@ NAME
     Pod::Weaver::Plugin::SubSpec - Insert POD for subs from spec
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
     In your "weaver.ini":

@@ -1,6 +1,6 @@
 package Pod::Weaver::Plugin::SubSpec;
 BEGIN {
-  $Pod::Weaver::Plugin::SubSpec::VERSION = '0.02';
+  $Pod::Weaver::Plugin::SubSpec::VERSION = '0.03';
 }
 # ABSTRACT: Insert POD for subs from spec
 
@@ -8,12 +8,15 @@ use 5.010;
 use Moose;
 with 'Pod::Weaver::Role::Section';
 
+use Log::Any '$log';
+
 use Pod::Elemental;
 use Pod::Elemental::Element::Nested;
 use Sub::Spec::Pod qw(gen_pod);
 
 
 sub weave_section {
+    $log->trace("-> ".__PACKAGE__."::weave_section()");
     my ($self, $document, $input) = @_;
 
     my $filename = $input->{filename} || 'file';
@@ -25,8 +28,11 @@ sub weave_section {
         $package =~ s!/!::!g;
     } else {
         #$self->log(["skipped file %s (not a Perl module)", $filename]);
+        $log->debugf("skipped file %s (not a Perl module)", $filename);
         return;
     }
+
+    unshift @INC, "lib" unless 'lib' =~ @INC;
 
     # find the FUNCTIONS section in the POD
     my $funcs_section;
@@ -39,6 +45,7 @@ sub weave_section {
     }
     unless ($funcs_section) {
         #$self->log(["skipped file %s (no =head1 FUNCTIONS)", $filename]);
+        $log->debugf("skipped file %s (no =head1 FUNCTIONS)");
         return;
     }
 
@@ -51,8 +58,10 @@ sub weave_section {
             children => Pod::Elemental->read_string($2)->children,
         });
         $self->log(["adding spec POD for %s", $filename]);
+        $log->infof("adding spec POD for %s", $filename);
         push @{ $funcs_section->children }, $fpara;
     }
+    $log->trace("<- ".__PACKAGE__."::weave_section()");
 }
 
 1;
@@ -66,7 +75,7 @@ Pod::Weaver::Plugin::SubSpec - Insert POD for subs from spec
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
