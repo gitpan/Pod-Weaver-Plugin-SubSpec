@@ -1,6 +1,6 @@
 package Pod::Weaver::Plugin::SubSpec;
 BEGIN {
-  $Pod::Weaver::Plugin::SubSpec::VERSION = '0.04';
+  $Pod::Weaver::Plugin::SubSpec::VERSION = '0.05';
 }
 # ABSTRACT: Insert POD for subs from spec
 
@@ -44,7 +44,7 @@ sub weave_section {
         last;
     }
     unless ($funcs_section) {
-        #$self->log(["skipped file %s (no =head1 FUNCTIONS)", $filename]);
+        $self->log(["skipped file %s (no =head1 FUNCTIONS)", $filename]);
         $log->debugf("skipped file %s (no =head1 FUNCTIONS)");
         return;
     }
@@ -75,7 +75,7 @@ Pod::Weaver::Plugin::SubSpec - Insert POD for subs from spec
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
