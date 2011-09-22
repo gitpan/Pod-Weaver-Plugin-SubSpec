@@ -1,6 +1,6 @@
 package Pod::Weaver::Plugin::SubSpec;
 BEGIN {
-  $Pod::Weaver::Plugin::SubSpec::VERSION = '0.05';
+  $Pod::Weaver::Plugin::SubSpec::VERSION = '0.06';
 }
 # ABSTRACT: Insert POD for subs from spec
 
@@ -51,15 +51,19 @@ sub weave_section {
 
     # generate the POD and insert it to FUNCTIONS section
     my $pod_text = gen_module_subs_pod(module=>$package, path=>$filename);
+    my $found;
     while ($pod_text =~ /^=head2 ([^\n]+)\n(.+?)(?=^=head2|\z)/msg) {
+        $found++;
         my $fpara = Pod::Elemental::Element::Nested->new({
             command  => 'head2',
             content  => $1,
             children => Pod::Elemental->read_string($2)->children,
         });
+        push @{ $funcs_section->children }, $fpara;
+    }
+    if ($found) {
         $self->log(["adding spec POD for %s", $filename]);
         $log->infof("adding spec POD for %s", $filename);
-        push @{ $funcs_section->children }, $fpara;
     }
     $log->trace("<- ".__PACKAGE__."::weave_section()");
 }
@@ -75,7 +79,7 @@ Pod::Weaver::Plugin::SubSpec - Insert POD for subs from spec
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 

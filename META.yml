@@ -21,4 +21,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Pod-Weaver-Plugin-SubSpec/
   repository: http://github.com/sharyanto/perl-Pod-Weaver-Plugin-SubSpec
-version: 0.05
+version: 0.06

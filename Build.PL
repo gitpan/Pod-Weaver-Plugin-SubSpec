@@ -17,7 +17,7 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Pod-Weaver-Plugin-SubSpec',
-  'dist_version' => '0.05',
+  'dist_version' => '0.06',
   'license' => 'perl',
   'module_name' => 'Pod::Weaver::Plugin::SubSpec',
   'recommends' => {},
